@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
     constructor(props) {
@@ -7,12 +8,12 @@ class TodoItem extends Component {
     }
 
     render() {
-        const {content} = this.props 
+        const {content, index, test} = this.props 
         return (
             <li
-                key={this.props.index}
+                key={index}
                 onClick={this.handleClick}
-                dangerouslySetInnerHTML={{ __html: this.props.content }}
+                dangerouslySetInnerHTML={{ __html: content + test }}
             />
         );
     }
@@ -21,6 +22,17 @@ class TodoItem extends Component {
         const { deleteItem, index } = this.props 
         deleteItem(index)
     }
+}
+
+TodoItem.PropTypes = {
+    test: PropTypes.string,
+    content: PropTypes.string.isRequired,
+    deleteItem: PropTypes.func,
+    index: PropTypes.number,
+}
+
+TodoItem.defaultProps = {
+    test: 'hello world'
 }
 
 export default TodoItem;
