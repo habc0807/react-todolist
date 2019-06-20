@@ -7,13 +7,21 @@ class TodoItem extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        if(nextProps.content !== this.props.centent) {
+            return true  
+        } else {
+            return false 
+        }
+    }
+
     render() {
-        const {content, index, test} = this.props 
+        const {content} = this.props 
         return (
             <li
-                key={index}
+                key={content}
                 onClick={this.handleClick}
-                dangerouslySetInnerHTML={{ __html: content + test }}
+                dangerouslySetInnerHTML={{ __html: content }}
             />
         );
     }
@@ -24,15 +32,10 @@ class TodoItem extends Component {
     }
 }
 
-TodoItem.PropTypes = {
-    test: PropTypes.string,
-    content: PropTypes.string.isRequired,
+TodoItem.propTypes = {
+    content: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     deleteItem: PropTypes.func,
     index: PropTypes.number,
-}
-
-TodoItem.defaultProps = {
-    test: 'hello world'
-}
+};
 
 export default TodoItem;
