@@ -132,6 +132,33 @@ componentWillUnmount // 当这个组件即将被从页面中剔除会自动执�
 所以自定义组件需要写的生命周期是render。
 
 
+css3动画 
+
+1. transtion: all 1s ease-in forwards 
+2. animation ： animation-name 2s ease-in forwards 
+
+Keyframes animation-name {
+	0% {}
+	50% {} 
+	100% {} 
+}
+
+
+
+react-transition-group 实现动画 
+
+
+<CSSTransition 
+                    in={this.state.show}
+                    timeout={1000}
+                    classNames='fade'
+                    unmountOnExit
+                    onEntered={(el) => {el.style.color = 'blue'}}
+                    appear={true}
+                >
+                    <div>hello</div>
+                </CSSTransition>
+
 
 
 
