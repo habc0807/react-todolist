@@ -149,15 +149,23 @@ react-transition-group 实现动画
 
 
 <CSSTransition 
-                    in={this.state.show}
-                    timeout={1000}
-                    classNames='fade'
-                    unmountOnExit
-                    onEntered={(el) => {el.style.color = 'blue'}}
-                    appear={true}
-                >
-                    <div>hello</div>
-                </CSSTransition>
+    in={this.state.show}
+    timeout={1000}
+    classNames='fade'
+    unmountOnExit
+    onEntered={(el) => {el.style.color = 'blue'}}
+    appear={true}
+>
+    <div>hello</div>
+</CSSTransition>
+
+
+1.Redux = Reducer + Flux （官方推出最原始的数据层框架）
+Flux的了解 todo 视频 
+
+Redux的工作流程：  
+
+
 
 
 
