@@ -165,6 +165,45 @@ Flux的了解 todo 视频
 
 Redux的工作流程：  
 
+store: 图书管理员
+reducer: 管理员的小本本（记录借阅情况）
+component: 接受store查阅reducer后的数据 
+action: component 用户操作 跟管理说的话 剩下的事让图书管理员去处理 
+
+
+store
+1.安装并引用redux 2.creactStore创建store, 并且接收一个函数参数 
+
+```
+import {createStore} from 'redux'
+import reducer from './reducer'
+
+const store = createStore(reducer)
+export default store 
+```
+
+reducer 返回一个 函数，该函数接收两个参数 state\action, state可赋值一个默认参数defaultState 
+```
+const defaultState = {
+    list: [
+        '1',
+        '2',
+        '3',
+    ],
+    inputValue: ''
+}
+
+export default (state = defaultState, action) => {
+    return state
+}
+```
+
+怎样让store一改变 我的组件就改变呢 
+```
+this.setState(store.getState()) // 如果新的state不依赖于老得state的数据 用对象可以
+this.setState(store.getState) // 如果新的state依赖于老得state的数据 就传函数 
+```
+为什么呢？里面涉及到哪些底层原理？
 
 
 
