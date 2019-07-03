@@ -207,10 +207,27 @@ this.setState(store.getState) // 如果新的state依赖于老得state的数据 
 
 
 
+actionCreator 统一处理action
+actionType 统一管理action type
+
+当一个组件只有render函数的时候 就可以写成 无状态组件 
 
 
+无状态组件的优势是什么？
+性能比较高 是因为它就是一个函数 UI组件class是一个类 类生成对象 react组件还会有生命周期函数，
+
+redux-thunk的是redux的中间件，不是react的中间件 
+安装thunk 使用thunk 查看的文档是在 redux-devtools-extentsion里 
+
+到底什么是Redux中间件？action 和 store 之间 
+当我们使用里 thunk 之后 action 可以是函数里  对dispatch方法做了一个升级 
+传过来是一个函数 它会先执行 
+
+dispatch 如果接收是对象 我直接传给 store
+         如果传过来的是函数 我先将函数执行 再
 
 
-
-
+redux-log
+redux-thunk
+redux-saga 单独把异步的处理拆分到一个页面里 
 

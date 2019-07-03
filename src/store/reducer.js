@@ -1,9 +1,6 @@
+import {CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM, INIT_LIST_UI} from './actionTypes'
 const defaultState = {
-    list: [
-        '1',
-        '2',
-        '3',
-    ],
+    list: [],
     inputValue: ''
 }
 
@@ -11,16 +8,22 @@ const defaultState = {
 // reducer 可以接收state,但是绝不能修改state 
 export default (state = defaultState, action) => {
     console.log(state, action)
-    if(action.type === 'change_input_value') {
+    if(action.type === CHANGE_INPUT_VALUE) {
         const newState = JSON.parse(JSON.stringify(state)) // 最简单的深拷贝技巧
         newState.inputValue = action.value 
         return newState
     }
 
-    if(action.type === 'add_todo_item') {
+    if(action.type === ADD_TODO_ITEM) {
         const newState = JSON.parse(JSON.stringify(state)) // 最简单的深拷贝技巧
         newState.list.push(newState.inputValue)
         newState.inputValue = ''
+        return newState
+    }
+
+    if(action.type === DELETE_TODO_ITEM) {
+        const newState = JSON.parse(JSON.stringify(state))
+        newState.list.splice(action.index, 1)
         return newState
     }
     return state

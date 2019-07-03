@@ -1,7 +1,11 @@
 import React , { Component }from 'react';
 import 'antd/dist/antd.css'
-import { Input, Button, List } from 'antd'
 import store from './store/index.js'
+import TodoListUI from './TodoListUI.js'
+import axios from 'axios'
+import ReduxThunk from 'redux-thunk'
+import { getInitList, CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM} from './store/actionTypes'
+import {getInputChangeAction, getAddTodoItemAction, getDeleteTodoItemAction} from './store/actionCreator'
 
 
 class TodoList extends Component {
@@ -11,44 +15,34 @@ class TodoList extends Component {
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleStoreChange = this.handleStoreChange.bind(this)
         this.handleBtnClick = this.handleBtnClick.bind(this)
+        this.handleDeleteItem = this.handleDeleteItem.bind(this)
         store.subscribe(this.handleStoreChange) // subscribe监听store改变 subscribe里的callback就会自动执行
     }
+
+    componentDidMount() {
+        const action = getInitList()
+        store.dispatch(action)
+        console.log(action)
+        // axios.get('/list.json').then(() => {
+        //     console.log('----')
+        // })
+    }
+
     render() {
         return (
-            <div>
-                <div>
-                    <Input placeholder="todo list" 
-                    value={this.state.inputValue} 
-                    onChange={this.handleInputChange}
-                    />
-                    <Button type="primary" onClick={this.handleBtnClick}>提交</Button>
-                </div>
-
-                <List
-                    header={<div>Header</div>}
-                    footer={<div>Footer</div>}
-                    bordered
-                    dataSource={this.state.list}
-                    renderItem={item => (
-                        <List.Item>
-                            {item}
-                        </List.Item>
-                    )}
-                    />
-            </div>
+            <TodoListUI
+                inputValue={this.state.inputValue}
+                handleInputChange={this.handleInputChange}
+                handleBtnClick={this.handleBtnClick}
+                list={this.state.list}
+                handleDeleteItem={this.handleDeleteItem}
+            />
         )
     }
 
     handleInputChange(e) {
-        // 创建一句话
-        const action = {
-            type: 'change_input_value',
-            value: e.target.value 
-        }
-
-        // 把这句话传给store 
-        store.dispatch(action)
-        console.log(e.target.value)
+        const action = getInputChangeAction(e.target.value) // 创建一句话action
+        store.dispatch(action) // 把这句话传给store 
     }
 
     handleStoreChange() {
@@ -56,10 +50,12 @@ class TodoList extends Component {
     }
 
     handleBtnClick(e) {
-        const action = {
-            type: 'add_todo_item',
+        const action = getAddTodoItemAction()
+        store.dispatch(action)
+    }
 
-        }
+    handleDeleteItem(index) {
+        const action = getDeleteTodoItemAction(index)
         store.dispatch(action)
     }
 }
