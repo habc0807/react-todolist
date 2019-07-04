@@ -219,6 +219,7 @@ actionType 统一管理action type
 redux-thunk的是redux的中间件，不是react的中间件 
 安装thunk 使用thunk 查看的文档是在 redux-devtools-extentsion里 
 
+
 到底什么是Redux中间件？action 和 store 之间 
 当我们使用里 thunk 之后 action 可以是函数里  对dispatch方法做了一个升级 
 传过来是一个函数 它会先执行 
@@ -231,3 +232,8 @@ redux-log
 redux-thunk
 redux-saga 单独把异步的处理拆分到一个页面里 
 
+
+
+
+
+Provider 是react-redux提供的第一个核心API, Provider 提供器将store提供给了它内部组件 

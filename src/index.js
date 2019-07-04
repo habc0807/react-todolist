@@ -1,6 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App'
-import TodoList from './TodoList'
 
-ReactDOM.render(<TodoList />, document.getElementById('root'));
+import { Provider } from 'react-redux'
+import store from './store'
+
+import TodoList from './TodoList'
+// import Autocomp from './Autocomp.js'
+
+const App = (
+    <Provider store={store}>
+        <TodoList/>
+        {/* <Autocomp/> */}
+    </Provider>
+)
+
+ReactDOM.render(App, document.getElementById('root'));
