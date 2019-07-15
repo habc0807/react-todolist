@@ -2,8 +2,8 @@ import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM } from './actionType'
 import { message } from 'antd'
 
 let defaultState = {
-    inputValue: 'ijjl',
-    list: ['xiao', 'hei']
+    inputValue: '',
+    list: []
 }
 
 export default (state = defaultState, action) => {
@@ -17,7 +17,7 @@ export default (state = defaultState, action) => {
 
     if(action.type === ADD_ITEM) {
         let newState = JSON.parse(JSON.stringify(state))
-        const { inputValue, list=[] } = newState
+        const { inputValue, list } = newState
 
         if(!inputValue) {
             message.warning('Adding todo list cannot be empty', 1);
@@ -28,10 +28,9 @@ export default (state = defaultState, action) => {
             message.warning(`You have a few todos unfinished. Don't be too ambitious`, 2);
             return 
         }
-
         newState.list = [inputValue, ...list]
         newState.inputValue = ''
-        
+
         return newState
     }
 
@@ -44,7 +43,6 @@ export default (state = defaultState, action) => {
 
         return newState
     }
-
 
     return state 
 }
