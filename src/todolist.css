@@ -1,0 +1,22 @@
+body {
+    padding: 15px;
+}
+.inputWrap {
+    display: flex;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.inputWrap .input,
+.inputWrap .button {
+    height: 46px;
+}
+
+.inputWrap .input {
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+.inputWrap .button {
+    padding: 15px 10px;
+}

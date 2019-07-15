@@ -1,64 +1,78 @@
-import React, {Component} from 'react'
-import { connect } from 'react-redux'
+import React, { Fragment, Component } from 'react'
+import { Input, Button, List, message } from 'antd'
+import './todolist.css'
 
-const TodoList = (props) => {
-    const {inputValue, list, changeInputValue, handleClick, handleDelete} = props 
-
-    return (
-        <div>
-            <div>
-                <input value={inputValue} onChange={changeInputValue}/>
-                <button onClick={handleClick}>提交</button>
-            </div>
-            <ul>
-                {
-                    list.map((item, index) => {
-                        return <li key={index} onClick={() => {handleDelete(index)}}>{item}</li>
-                    })
-                }
-            </ul>
-        </div>
-    )
-}
-
-
-const mapStateToProps = (state) => {
-    return {
-        inputValue: state.inputValue,
-        list: state.list 
-    }
-}
-
-// store.dispatch props
-const mapDispatchToProps = (dispatch) => {
-    return {
-        changeInputValue(e) {
-            console.log(e.target.value)
-            const action = {
-                type: 'change_input_value',
-                value: e.target.value
-            }
-
-            dispatch(action)
-        },
-
-        handleClick() {
-            const action = {
-                type: 'add_item'
-            }
-            dispatch(action)
-        },
-
-        handleDelete(index) {
-            const action = {
-                type: 'delete_item',
-                index: index
-            }
-            dispatch(action)
+class TodoList extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            list: [],
+            inputValue: '',
         }
+        this.handleChangeInput = this.handleChangeInput.bind(this)
+        this.handleAdd = this.handleAdd.bind(this)
+    }
+
+    render() {
+        const {list, inputValue} = this.state 
+        const headerTip = !list || list.length === 0 ? '' : 'Just to do it'
+        const footerTip = list && list.length >= 5 ? `你还有5个todo没完成，不要好高骛远` : ''
+
+        return (
+            <Fragment>
+                <div className="inputWrap">
+                    <Input className="input" value={inputValue} placeholder="What are you doing" onChange={this.handleChangeInput}/>
+                    <Button className="button" type="primary" onClick={this.handleAdd}>Add</Button>
+                </div>
+
+                <List
+                    header={headerTip}
+                    footer={footerTip}
+                    bordered
+                    dataSource={this.state.list}
+                    renderItem={(item, index) => (
+                        <List.Item onClick={this.handleDeleteItem.bind(this, index)} data-index={index} key={index}>
+                            {item}
+                        </List.Item>
+                    )}
+                />
+            </Fragment>
+        )
+    }
+
+    handleDeleteItem(index) {
+        let {list} = this.state 
+        list.splice(index, 1)
+
+        this.setState({
+            list
+        })
+    }
+
+    handleChangeInput(e) {
+        this.setState({
+            inputValue: e.target.value
+        })
+    }
+
+    handleAdd(e){
+        const {inputValue, list=[]} = this.state
+
+        if(!inputValue) {
+            message.warning('todo list cannot be empty', 1);
+            return 
+        }
+
+        if(list && list.length >= 5) {
+            message.warning(`You have a few todos unfinished. Don't be too ambitious`, 2);
+            return 
+        }
+    
+        this.setState({
+            list: [inputValue, ...list],
+            inputValue: ''
+        })
     }
 }
 
-// 让todolist组件与store作连接 做连接就要有一个规则 规则就在 mapStateToProps
-// connect导出的是一个结果 就是一个容器组件 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default TodoList
