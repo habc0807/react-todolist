@@ -1,16 +1,19 @@
 import React, { Fragment, Component } from 'react'
-import { Input, Button, List, message } from 'antd'
+import { Input, Button, List } from 'antd'
 import './todolist.css'
+import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM } from './store/actionType'
+import store from './store'
+
 
 class TodoList extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            list: [],
-            inputValue: '',
-        }
+        this.state = store.getState()
         this.handleChangeInput = this.handleChangeInput.bind(this)
-        this.handleAdd = this.handleAdd.bind(this)
+        this.handleAddItem = this.handleAddItem.bind(this)
+        this.handleState = this.handleState.bind(this)
+
+        store.subscribe(this.handleState)
     }
 
     render() {
@@ -22,7 +25,7 @@ class TodoList extends Component {
             <Fragment>
                 <div className="inputWrap">
                     <Input className="input" value={inputValue} placeholder="What are you doing" onChange={this.handleChangeInput}/>
-                    <Button className="button" type="primary" onClick={this.handleAdd}>Add</Button>
+                    <Button className="button" type="primary" onClick={this.handleAddItem}>Add</Button>
                 </div>
 
                 <List
@@ -40,38 +43,32 @@ class TodoList extends Component {
         )
     }
 
+    handleState() {
+        let newState = store.getState()
+        this.setState(newState)
+    }
+ 
     handleDeleteItem(index) {
-        let {list} = this.state 
-        list.splice(index, 1)
-
-        this.setState({
-            list
-        })
+        let action = {
+            type: DELETE_ITEM,
+            index
+        }
+        store.dispatch(action)
     }
 
     handleChangeInput(e) {
-        this.setState({
-            inputValue: e.target.value
-        })
+        let action = {
+            type: CHANGE_INPUT,
+            value: e.target.value 
+        }
+        store.dispatch(action)
     }
 
-    handleAdd(e){
-        const {inputValue, list=[]} = this.state
-
-        if(!inputValue) {
-            message.warning('todo list cannot be empty', 1);
-            return 
+    handleAddItem(e){
+        let action = {
+            type: ADD_ITEM
         }
-
-        if(list && list.length >= 5) {
-            message.warning(`You have a few todos unfinished. Don't be too ambitious`, 2);
-            return 
-        }
-    
-        this.setState({
-            list: [inputValue, ...list],
-            inputValue: ''
-        })
+        store.dispatch(action)
     }
 }
 
