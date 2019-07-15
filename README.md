@@ -236,4 +236,6 @@ redux-saga 单独把异步的处理拆分到一个页面里
 
 
 
-Provider 是react-redux提供的第一个核心API, Provider 提供器将store提供给了它内部组件 
+Provider 是react-redux提供的第一个核心API, Provider 提供器将store提供给了它内部组件
+
+actionCreator.js 将用户行为的处理都放在该文件里处理 返回用户行为的action对象
