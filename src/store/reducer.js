@@ -1,4 +1,4 @@
-import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM } from './actionType'
+import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, INIT_LIST_ACTION } from './actionType'
 import { message } from 'antd'
 
 let defaultState = {
@@ -51,6 +51,12 @@ export default (state = defaultState, action) => {
         newState.list = list 
 
         return newState
+    }
+
+    if(action.type === INIT_LIST_ACTION) {
+        let newState = JSON.parse(JSON.stringify(state))
+        newState.list = action.data 
+        return newState 
     }
 
     return state 
