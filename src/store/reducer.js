@@ -3,7 +3,9 @@ import { message } from 'antd'
 
 let defaultState = {
     inputValue: '',
-    list: []
+    list: [],
+    headerTip: '',
+    footerTip: '',
 }
 
 export default (state = defaultState, action) => {
@@ -20,14 +22,21 @@ export default (state = defaultState, action) => {
         const { inputValue, list } = newState
 
         if(!inputValue) {
-            message.warning('Adding todo list cannot be empty', 1);
-            return 
+            message.warning('添加任务不能为空', 1);
+            return newState
+        }
+
+        if(list && list.length > 0) {
+            newState.headerTip = '今日任务' 
         }
 
         if(list && list.length >= 5) {
-            message.warning(`You have a few todos unfinished. Don't be too ambitious`, 2);
-            return 
+            message.warning(`少年，不要好高骛远`, 2);
+            newState.footerTip = '少年，不要好高骛远'
+            newState.inputValue = ''
+            return newState
         }
+        
         newState.list = [inputValue, ...list]
         newState.inputValue = ''
 
