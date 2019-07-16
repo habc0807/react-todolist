@@ -1,4 +1,4 @@
-import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, INIT_LIST_ACTION } from './actionType'
+import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, INIT_LIST_ACTION, GET_INIT_LIST } from './actionType'
 
 
 export const getChangeInputAction = (value) => (
@@ -27,3 +27,7 @@ export const initListAction = (data) => (
         data
     }
 )
+
+export const getInitList = () => ({
+    type: GET_INIT_LIST
+})

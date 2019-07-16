@@ -1,7 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import reducer from './reducer'
+import createSagaMiddleware from 'redux-saga'
+import todoSagas from './sagas'
 
-
+// create the saga middleware 
+const sagaMiddleware = createSagaMiddleware()
 
 const composeEnhancers =
   typeof window === 'object' &&
@@ -10,12 +13,15 @@ const composeEnhancers =
     }) : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(),
+  applyMiddleware(sagaMiddleware),
 );
 
 const store = createStore(
     reducer,
     enhancer
 )
+
+// then run the todosagas
+sagaMiddleware.run(todoSagas)
 
 export default store 
