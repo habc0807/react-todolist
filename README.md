@@ -239,3 +239,19 @@ redux-saga 单独把异步的处理拆分到一个页面里
 Provider 是react-redux提供的第一个核心API, Provider 提供器将store提供给了它内部组件
 
 actionCreator.js 将用户行为的处理都放在该文件里处理 返回用户行为的action对象
+
+1.安装了chrome的redux-devtools插件，如果想让项目可以看到redux相关信息，需要在项目中store/index.js中配置 
+
+```
+import { createStore } from 'redux'
+import reducer from './reducer'
+
+const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
+export default store 
+```
+> window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+

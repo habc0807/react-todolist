@@ -4,11 +4,10 @@ import {
     getChangeInputAction, 
     getAddItemAction, 
     getDeleteItemAction,
-    initListAction 
+    getTodoList
 } from './store/actionCreator'
 import { connect } from 'react-redux'
 import TodoListUI from './TodoListUI'
-import axios from 'axios'
 
 class TodoList extends Component {
     render() {
@@ -28,10 +27,7 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/list').then((res) => {
-           const listData = res.data.data.list
-           this.props.handleInitList(listData)
-        })
+        this.props.handleInitList()
     }
 }
 
@@ -46,8 +42,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        handleInitList(listData) {
-            const action = initListAction(listData)
+        handleInitList() {
+            const action = getTodoList()
             dispatch(action)
         },
 

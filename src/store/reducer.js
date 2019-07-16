@@ -29,16 +29,15 @@ export default (state = defaultState, action) => {
         if(list && list.length > 0) {
             newState.headerTip = '今日任务' 
         }
-
-        if(list && list.length >= 5) {
-            message.warning(`少年，不要好高骛远`, 2);
-            newState.footerTip = '少年，不要好高骛远'
-            newState.inputValue = ''
-            return newState
-        }
         
         newState.list = [inputValue, ...list]
         newState.inputValue = ''
+        
+        if(newState.list && newState.list.length >= 5) {
+            message.warning(`少年，不要好高骛远`, 2);
+            newState.footerTip = '少年，不要好高骛远'
+            return newState
+        }
 
         return newState
     }
@@ -46,6 +45,10 @@ export default (state = defaultState, action) => {
     if(action.type === DELETE_ITEM) {
         let newState = JSON.parse(JSON.stringify(state))
         let { list } = newState 
+
+        if(list < 5) {
+            newState.footerTip = ''
+        }
 
         list.splice(action.index, 1)
         newState.list = list 

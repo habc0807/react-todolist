@@ -1,4 +1,5 @@
 import { CHANGE_INPUT, ADD_ITEM, DELETE_ITEM, INIT_LIST_ACTION } from './actionType'
+import axios from 'axios'
 
 export const getChangeInputAction = (value) => (
     {
@@ -26,4 +27,14 @@ export const initListAction = (data) => (
         data
     }
 )
+
+export const getTodoList = () => {
+    return (dispatch, getState) => {
+        axios.get('http://localhost:8000/list').then((res) => {
+           const listData = res.data.data.list
+           const action = initListAction(listData)
+           dispatch(action)
+        })
+    }
+}
 
